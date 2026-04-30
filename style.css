@@ -444,7 +444,14 @@ body {
     .main-title { font-size: 3.5rem; }
     .letter-N { font-size: 5rem; }
     .navbar { padding: 1.5rem; flex-direction: column; gap: 1rem; }
-    .nav-links { gap: 1.5rem; }
+    .nav-links { gap: 1.5rem; flex-wrap: wrap; justify-content: center; }
+    .section { padding: 6rem 1.5rem; }
     .menu-grid { grid-template-columns: 1fr; }
     .cursor-glow { display: none; }
+    
+    /* Fix mobile background bug (iOS Safari zoom issue) */
+    .hero, .bg-image-section {
+        background-attachment: scroll;
+        background-position: center center;
+    }
 }

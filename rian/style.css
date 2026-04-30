@@ -133,3 +133,16 @@ body::before {
     50% { transform: translateY(-10px); }
     100% { transform: translateY(0px); }
 }
+
+/* Responsive Fixes */
+@media (max-width: 768px) {
+    body {
+        /* Fix iOS Safari background zoom bug */
+        background-attachment: scroll;
+        background-position: center center;
+    }
+    
+    .rian-logo {
+        max-width: 120px;
+    }
+}
