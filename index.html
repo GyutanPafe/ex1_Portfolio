@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Noctra | 境界の夜カフェ</title>
+    <meta name="description" content="現実と異世界の狭間にある、深夜だけ開く夜カフェ「Noctra」。条件を満たした者だけが辿り着ける、時間や記憶が曖昧になる場所。">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Noto+Serif+JP:wght@300;400;500&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Custom Cursor Glow -->
+    <div class="cursor-glow"></div>
+    
+    <!-- Particles -->
+    <canvas id="particle-canvas"></canvas>
+
+    <!-- Initial Loading Screen -->
+    <div id="loader">
+        <div class="loader-logo">
+            <span class="logo-text">N</span>octra
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar fade-on-scroll">
+        <div class="nav-brand">Noctra</div>
+        <ul class="nav-links">
+            <li><a href="#story">Story</a></li>
+            <li><a href="#menu">Menu</a></li>
+            <li><a href="#access">Access</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="main-title">
+                <span class="letter-N">N</span>octra
+            </h1>
+            <p class="subtitle">Café Between Reality and The Void</p>
+            <div class="scroll-indicator">
+                <div class="mouse"></div>
+                <span>Scroll down</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Story Section -->
+    <section id="story" class="section dark-section">
+        <div class="container fade-on-scroll">
+            <h2 class="section-title">Concept</h2>
+            <div class="story-content">
+                <p>このカフェは、現実と異世界の境界に存在する。<br><br>黄昏時、特定の条件を満たした人だけが辿り着ける場所。<br>ここでは時間の流れは曖昧で、訪れる客もまた“どこか違う”。<br><br>扉を開ければ、そこはもうあなたの知る世界ではない。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu Section -->
+    <section id="menu" class="section bg-image-section">
+        <div class="section-overlay"></div>
+        <div class="container fade-on-scroll">
+            <h2 class="section-title">Menu</h2>
+            <div class="menu-grid">
+                <div class="menu-item">
+                    <h3>夜明け前のブレンド</h3>
+                    <p class="menu-en">Pre-Dawn Blend</p>
+                    <p class="menu-desc">夜の深い底で焙煎された、仄かな苦味と星の香り</p>
+                    <span class="price">¥ 1,200</span>
+                </div>
+                <div class="menu-item">
+                    <h3>記憶のラテ</h3>
+                    <p class="menu-en">Latte of Memories</p>
+                    <p class="menu-desc">忘れたかったこと、忘れたくなかったことが水面に浮かぶ一杯</p>
+                    <span class="price">¥ 1,400</span>
+                </div>
+                <div class="menu-item">
+                    <h3>境界のモクテル</h3>
+                    <p class="menu-en">Boundary Mocktail</p>
+                    <p class="menu-desc">琥珀色と紫が混ざり合う、微睡みへ誘う果実水</p>
+                    <span class="price">¥ 1,600</span>
+                </div>
+                <div class="menu-item">
+                    <h3>砂時計のパルフェ</h3>
+                    <p class="menu-en">Hourglass Parfait</p>
+                    <p class="menu-desc">落ちる砂のように、少しずつ味が変化する真夜中の甘味</p>
+                    <span class="price">¥ 1,800</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Access Section -->
+    <section id="access" class="section dark-section">
+        <div class="container fade-on-scroll">
+            <h2 class="section-title">Access</h2>
+            <div class="access-info">
+                <p><strong>Address</strong><br>目を瞑り、戻りたい過去を想像してください<br>消えかけのランプが目印です。</p>
+                <p><strong>Hours</strong><br>24:00 - 0:00 <br>(黄昏時のみ営業)</p>
+                <a href="rian/index.html" class="keyhole-icon" id="secret-keyhole">
+                    <!-- Simple CSS keyhole shape -->
+                    <div class="keyhole-circle"></div>
+                    <div class="keyhole-triangle"></div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <p>&copy; Noctra. All memories reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

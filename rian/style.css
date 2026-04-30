@@ -1,0 +1,135 @@
+:root {
+    --bg-dark: #07080b;
+    --text-main: #e2dfd2;
+    --accent-gold: #c5a961;
+    --font-en: 'Cinzel', serif;
+    --font-jp: 'Noto Serif JP', serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-dark);
+    background-image: url('../bg.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    color: var(--text-main);
+    font-family: var(--font-en);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Dark overlay to make text readable */
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(7, 8, 11, 0.7);
+    backdrop-filter: blur(8px);
+    z-index: 1;
+}
+
+.rian-container {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    animation: fade-in 2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+.rian-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.rian-logo {
+    max-width: 150px;
+    margin-bottom: 2rem;
+    filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.15));
+    animation: float 6s ease-in-out infinite;
+}
+
+.rian-title {
+    font-family: var(--font-jp);
+    font-size: 1.2rem;
+    letter-spacing: 0.2em;
+    font-weight: 400;
+    margin-bottom: 1rem;
+    color: var(--text-main);
+}
+
+.rian-email {
+    margin-bottom: 3rem;
+}
+
+.rian-email a {
+    color: var(--accent-gold);
+    text-decoration: none;
+    font-family: var(--font-jp);
+    letter-spacing: 0.1em;
+    font-size: 0.9rem;
+    transition: color 0.3s, text-shadow 0.3s;
+}
+
+.rian-email a:hover {
+    color: #fff;
+    text-shadow: 0 0 15px var(--accent-gold);
+}
+
+.back-link {
+    color: rgba(226, 223, 210, 0.5);
+    text-decoration: none;
+    font-size: 0.8rem;
+    letter-spacing: 0.2em;
+    transition: color 0.3s;
+    position: relative;
+}
+
+.back-link::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 1px;
+    background: var(--accent-gold);
+    transition: width 0.3s;
+}
+
+.back-link:hover {
+    color: var(--accent-gold);
+}
+
+.back-link:hover::after {
+    width: 100%;
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+}
