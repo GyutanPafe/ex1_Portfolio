@@ -49,19 +49,23 @@
                 <span class="letter-N">N</span>octra
             </h1>
             <p class="subtitle">Café Between Reality and The Void</p>
-            <div class="scroll-indicator">
-                <div class="mouse"></div>
-                <span>Scroll down</span>
+            <div class="hero-intro">
+                <p class="hero-intro-line1">本日のおすすめは、少し特別です</p>
+                <p class="hero-intro-line2">気づいた人だけが辿り着く<br>これは、あなたのための灯りです</p>
             </div>
         </div>
+        <p class="cryptic-text hero-cryptic">灯りはお持ちですか。<br>それがあれば、迷うことはありません。</p>
     </header>
 
     <!-- Story Section -->
     <section id="story" class="section dark-section">
+        <p class="cryptic-text side-cryptic fade-on-scroll">この灯りは、何を燃やしているのだろう。</p>
         <div class="container fade-on-scroll">
             <h2 class="section-title">Concept</h2>
             <div class="story-content">
-                <p>このカフェは、現実と異世界の境界に存在する。<br><br>時間という概念が存在せず、特定の条件を満たした人だけが辿り着ける場所。<br>ここでは時間の流れは曖昧で、訪れる客もまた“どこか違う”。<br><br>扉を開ければ、そこはもうあなたの知る世界ではない。
+                <p>このカフェは、現実と異世界の境界に存在する。<br><br>時間という概念が存在せず特定の条件を満たした人だけが辿り着ける場所<br><br>ここでは時間の流れは曖昧で、<span
+                        id="secret-letter-trigger"
+                        class="secret-trigger">訪れる客もまた“どこか違う”</span><br><br>扉を開ければ、そこはもうあなたの知る世界ではない
                 </p>
             </div>
         </div>
@@ -70,32 +74,33 @@
     <!-- Menu Section -->
     <section id="menu" class="section bg-image-section">
         <div class="section-overlay"></div>
+        <p class="cryptic-text side-cryptic-right fade-on-scroll">同じ灯りを持つ客はいない。</p>
         <div class="container fade-on-scroll">
-            <h2 class="section-title">Menu</h2>
+            <h2 class="section-title secret-trigger" id="secret-menu-trigger">Menu</h2>
             <div class="menu-grid">
                 <div class="menu-item">
                     <h3>夜明け前のブレンド</h3>
                     <p class="menu-en">Pre-Dawn Blend</p>
                     <p class="menu-desc">夜の深い底で焙煎された、仄かな苦味と星の香り</p>
-                    <span class="price">¥ 1,200</span>
+                    <span class="price">¥ 1,202</span>
                 </div>
                 <div class="menu-item">
                     <h3>記憶のラテ</h3>
                     <p class="menu-en">Latte of Memories</p>
                     <p class="menu-desc">忘れたかったこと、忘れたくなかったことが水面に浮かぶ一杯</p>
-                    <span class="price">¥ 1,400</span>
+                    <span class="price">¥ 1,402</span>
                 </div>
                 <div class="menu-item">
                     <h3>境界のモクテル</h3>
                     <p class="menu-en">Boundary Mocktail</p>
                     <p class="menu-desc">琥珀色と紫が混ざり合う、微睡みへ誘う果実水</p>
-                    <span class="price">¥ 1,600</span>
+                    <span class="price">¥ 1,602</span>
                 </div>
                 <div class="menu-item">
                     <h3>砂時計のパルフェ</h3>
                     <p class="menu-en">Hourglass Parfait</p>
                     <p class="menu-desc">落ちる砂のように、少しずつ味が変化する真夜中の甘味</p>
-                    <span class="price">¥ 1,800</span>
+                    <span class="price">¥ 1,802</span>
                 </div>
             </div>
         </div>
@@ -106,8 +111,9 @@
         <div class="container fade-on-scroll">
             <h2 class="section-title">Access</h2>
             <div class="access-info">
-                <p><strong>Address</strong><br>望むと現れず<br>忘れようとすると現れる<br>消えかけのランプが目印です。</p>
+                <p><strong>Address</strong><br>望むと来ず、忘れようとすると現れる<br>人生や思い出とはそういうもの</p>
                 <p><strong>Hours</strong><br>24:00 - 0:00 <br>(時間という概念は存在しません)</p>
+                <p class="cryptic-text center-cryptic fade-on-scroll">帰り道は、灯りが教えてくれる。<br>外に出る頃には、少し変わっているかもしれない。</p>
                 <a href="rian/index.html" class="keyhole-icon" id="secret-keyhole">
                     <!-- Simple CSS keyhole shape -->
                     <div class="keyhole-circle"></div>
@@ -120,6 +126,59 @@
     <footer class="footer">
         <p>&copy; Noctra. All memories reserved.</p>
     </footer>
+
+    <!-- Lantern Cursor -->
+    <div class="lantern-cursor" id="lantern-cursor">
+        <div class="lantern-wrapper">
+            <div class="lantern-glow"></div>
+            <div class="lantern-body">
+                <div class="lantern-hook"></div>
+                <div class="lantern-glass">
+                    <div class="lantern-light"></div>
+                </div>
+                <div class="lantern-base"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Secret Letter Overlay -->
+    <div id="secret-letter-overlay" class="secret-overlay">
+        <div class="secret-letter-content">
+            <div class="letter-text" id="letter-text"></div>
+        </div>
+    </div>
+
+    <!-- Night Menu Overlay -->
+    <div id="night-menu-overlay" class="secret-overlay">
+        <div class="night-menu-content">
+            <h2 class="night-menu-title">Night Menu</h2>
+            <ul class="night-menu-list">
+                <li class="night-menu-item">
+                    <h3>記憶のラテ</h3>
+                    <p>忘れたい記憶ほど、甘く香る</p>
+                </li>
+                <li class="night-menu-item">
+                    <h3>影のブレンド</h3>
+                    <p>あなたの輪郭を少しだけ溶かす</p>
+                </li>
+                <li class="night-menu-item" id="last-drink-item">
+                    <div id="last-drink-default">
+                        <h3>最後の一杯</h3>
+                        <p>これで<span class="secret-trigger" id="secret-tea-trigger">お別れ</span>かもしれないし、始まりかもしれない</p>
+                    </div>
+                    <div id="last-drink-secret" style="display: none;">
+                        <h3 style="color: var(--accent-gold); text-shadow: 0 0 15px rgba(197, 169, 97, 0.6);">ストレートティー
+                        </h3>
+                        <p
+                            style="font-size: 0.8rem; line-height: 1.8; text-align: left; display: inline-block; margin-top: 1rem; color: rgba(226, 223, 210, 0.7); letter-spacing: 0.05em;">
+                            コーヒーとティーだから全然違うか笑言いたいことはたくさんあるけど、もう意味ないもんな。慎重にいって失敗したからほんと後悔してる。本来の自分で行ってこの結果なら普通に受け入れるし、引きずらないんだけどな〜。厳しいってwww
+                        </p>
+                    </div>
+                </li>
+            </ul>
+            <div class="night-menu-close">Close</div>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>

@@ -12,41 +12,66 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 1500);
     }, 2500);
 
-    // --- 2. Custom Cursor Glow ---
+    // --- 2. Custom Cursor Glow & Lantern ---
     const cursorGlow = document.querySelector(".cursor-glow");
-    let mouseX = 0;
-    let mouseY = 0;
-    let glowX = 0;
-    let glowY = 0;
+    const lanternCursor = document.querySelector(".lantern-cursor");
+    let mouseX = window.innerWidth / 2;
+    let mouseY = window.innerHeight / 2;
+    let glowX = mouseX;
+    let glowY = mouseY;
+    let lanternX = mouseX;
+    let lanternY = mouseY;
 
-    document.addEventListener("mousemove", (e) => {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-    });
+    const isMobile = window.innerWidth <= 768;
 
-    // Smooth cursor follow
-    function animateCursor() {
-        glowX += (mouseX - glowX) * 0.1;
-        glowY += (mouseY - glowY) * 0.1;
-        cursorGlow.style.transform = `translate(${glowX}px, ${glowY}px)`;
-        requestAnimationFrame(animateCursor);
+    if (!isMobile) {
+        document.addEventListener("mousemove", (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+
+        // Smooth cursor follow
+        function animateCursor() {
+            // Glow follows slower
+            glowX += (mouseX - glowX) * 0.08;
+            glowY += (mouseY - glowY) * 0.08;
+            cursorGlow.style.transform = `translate(${glowX}px, ${glowY}px) translate(-50%, -50%)`;
+            
+            // Lantern follows a bit faster
+            lanternX += (mouseX - lanternX) * 0.15;
+            lanternY += (mouseY - lanternY) * 0.15;
+            if (lanternCursor) {
+                lanternCursor.style.transform = `translate(${lanternX}px, ${lanternY}px)`;
+            }
+
+            requestAnimationFrame(animateCursor);
+        }
+        animateCursor();
+
+        document.addEventListener("mousedown", () => {
+            if (lanternCursor) lanternCursor.classList.add("clicked");
+        });
+        document.addEventListener("mouseup", () => {
+            if (lanternCursor) lanternCursor.classList.remove("clicked");
+        });
+
+        // Expand glow on clickable elements
+        const clickables = document.querySelectorAll("a, button, .menu-item, .secret-trigger, .night-menu-close, .keyhole-icon, .cryptic-text");
+        clickables.forEach(el => {
+            el.addEventListener("mouseenter", () => {
+                cursorGlow.style.width = "400px";
+                cursorGlow.style.height = "400px";
+                cursorGlow.style.background = "radial-gradient(circle, rgba(197, 169, 97, 0.15) 0%, rgba(74, 48, 109, 0.1) 40%, transparent 70%)";
+                if (lanternCursor) lanternCursor.classList.add("active");
+            });
+            el.addEventListener("mouseleave", () => {
+                cursorGlow.style.width = "300px";
+                cursorGlow.style.height = "300px";
+                cursorGlow.style.background = "radial-gradient(circle, rgba(197, 169, 97, 0.08) 0%, rgba(74, 48, 109, 0.05) 40%, transparent 70%)";
+                if (lanternCursor) lanternCursor.classList.remove("active");
+            });
+        });
     }
-    animateCursor();
-
-    // Expand glow on clickable elements
-    const clickables = document.querySelectorAll("a, .menu-item");
-    clickables.forEach(el => {
-        el.addEventListener("mouseenter", () => {
-            cursorGlow.style.width = "400px";
-            cursorGlow.style.height = "400px";
-            cursorGlow.style.background = "radial-gradient(circle, rgba(197, 169, 97, 0.15) 0%, rgba(74, 48, 109, 0.1) 40%, transparent 70%)";
-        });
-        el.addEventListener("mouseleave", () => {
-            cursorGlow.style.width = "300px";
-            cursorGlow.style.height = "300px";
-            cursorGlow.style.background = "radial-gradient(circle, rgba(197, 169, 97, 0.08) 0%, rgba(74, 48, 109, 0.05) 40%, transparent 70%)";
-        });
-    });
 
     // --- 3. Scroll Reveal Animation ---
     const fadeElements = document.querySelectorAll(".fade-on-scroll");
@@ -139,4 +164,95 @@ document.addEventListener("DOMContentLoaded", () => {
             canvas.height = window.innerHeight;
         });
     }
+
+    // --- 5. Secret Interactions ---
+    const letterTrigger = document.getElementById("secret-letter-trigger");
+    const letterOverlay = document.getElementById("secret-letter-overlay");
+    const letterTextEl = document.getElementById("letter-text");
+
+    const menuTrigger = document.getElementById("secret-menu-trigger");
+    const nightMenuOverlay = document.getElementById("night-menu-overlay");
+    const nightMenuClose = document.querySelector(".night-menu-close");
+
+    // Tea trigger variables
+    const teaTrigger = document.getElementById("secret-tea-trigger");
+    const lastDrinkDefault = document.getElementById("last-drink-default");
+    const lastDrinkSecret = document.getElementById("last-drink-secret");
+
+    const letters = [
+        "ここは、誰かが置き忘れた時間の吹き溜まり。\n時計の針は動かないのに、なぜか脈打つ音が聞こえる。\n…私はいったい、いつからここにいるのだろう。",
+        "あの時、選ばなかった道の先で、誰かが私を待っていた気がする。\nここは、そんな「もしも」が沈澱する場所。\n冷めた珈琲に映るのは、もう一人の私の顔だった。",
+        "『どうしても伝えたいことがあった』\nそう呟いて席を立ったあの客は、もう二度と現れないだろう。\nテーブルには、触れると熱を帯びる冷たい鍵だけが残されていた。",
+        "手元の灯りが、少し静かになった気がする。\n何かを思い出すたび、この光は記憶を燃料にして燃えるらしい。\n…外に出る頃には、私の何が消えているのだろうか。"
+    ];
+
+    if (letterTrigger && letterOverlay) {
+        letterTrigger.addEventListener("click", () => {
+            const randomLetter = letters[Math.floor(Math.random() * letters.length)];
+            letterTextEl.textContent = randomLetter;
+            letterOverlay.classList.add("show");
+            document.body.style.overflow = "hidden"; // Prevent scroll
+        });
+
+        letterOverlay.addEventListener("click", () => {
+            letterOverlay.classList.remove("show");
+            document.body.style.overflow = "";
+        });
+    }
+
+    if (menuTrigger && nightMenuOverlay) {
+        menuTrigger.addEventListener("click", () => {
+            nightMenuOverlay.classList.add("show");
+            document.body.style.overflow = "hidden";
+        });
+
+        nightMenuOverlay.addEventListener("click", (e) => {
+            // Close on background click or close button
+            if (e.target === nightMenuOverlay || e.target === nightMenuClose) {
+                nightMenuOverlay.classList.remove("show");
+                document.body.style.overflow = "";
+                if (lastDrinkDefault && lastDrinkSecret) {
+                    lastDrinkDefault.style.display = "block";
+                    lastDrinkSecret.style.display = "none";
+                }
+            }
+        });
+    }
+
+    if (teaTrigger && lastDrinkDefault && lastDrinkSecret) {
+        teaTrigger.addEventListener("click", (e) => {
+            e.stopPropagation();
+            
+            // Reset cursor styles since the trigger element will be hidden
+            if (cursorGlow) {
+                cursorGlow.style.width = "300px";
+                cursorGlow.style.height = "300px";
+                cursorGlow.style.background = "radial-gradient(circle, rgba(197, 169, 97, 0.08) 0%, rgba(74, 48, 109, 0.05) 40%, transparent 70%)";
+            }
+            if (lanternCursor) {
+                lanternCursor.classList.remove("active");
+            }
+            
+            lastDrinkDefault.style.display = "none";
+            lastDrinkSecret.style.display = "block";
+        });
+    }
+
+    // Close on ESC key
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") {
+            if (letterOverlay && letterOverlay.classList.contains("show")) {
+                letterOverlay.classList.remove("show");
+                document.body.style.overflow = "";
+            }
+            if (nightMenuOverlay && nightMenuOverlay.classList.contains("show")) {
+                nightMenuOverlay.classList.remove("show");
+                document.body.style.overflow = "";
+                if (lastDrinkDefault && lastDrinkSecret) {
+                    lastDrinkDefault.style.display = "block";
+                    lastDrinkSecret.style.display = "none";
+                }
+            }
+        }
+    });
 });

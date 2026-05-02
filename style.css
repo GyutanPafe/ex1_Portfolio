@@ -179,6 +179,37 @@ body {
     color: rgba(226, 223, 210, 0.7);
 }
 
+.hero-intro {
+    margin-top: 4rem;
+    font-family: var(--font-jp);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.hero-intro-line1 {
+    font-size: 1.05rem;
+    color: rgba(226, 223, 210, 0.85);
+    letter-spacing: 0.2em;
+    font-weight: 300;
+}
+
+.hero-intro-line2 {
+    font-size: 0.85rem;
+    color: rgba(226, 223, 210, 0.5);
+    letter-spacing: 0.15em;
+    line-height: 2.2;
+    opacity: 0;
+    font-weight: 300;
+    animation: fade-in-slow 1.2s 5.5s forwards ease-in-out;
+}
+
+@keyframes fade-in-slow {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
 .scroll-indicator {
     position: absolute;
     bottom: -15vh;
@@ -448,10 +479,340 @@ body {
     .section { padding: 6rem 1.5rem; }
     .menu-grid { grid-template-columns: 1fr; }
     .cursor-glow { display: none; }
+    .hero-intro { margin-top: 3rem; gap: 1rem; }
+    .hero-intro-line1 { font-size: 0.9rem; }
+    .hero-intro-line2 { font-size: 0.8rem; }
     
     /* Fix mobile background bug (iOS Safari zoom issue) */
     .hero, .bg-image-section {
         background-attachment: scroll;
         background-position: center center;
+    }
+}
+
+/* --- Secret Interactions & Lantern Cursor --- */
+body, a, button, .menu-item, .secret-trigger, .night-menu-close, .keyhole-icon {
+    cursor: none !important;
+}
+
+.lantern-cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+    z-index: 10001;
+}
+
+.lantern-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 24px;
+    height: 40px;
+    transform: translate(-50%, -50%);
+    transition: transform 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Glow */
+.lantern-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 90px;
+    height: 90px;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, rgba(230, 160, 80, 0.2) 0%, rgba(200, 130, 60, 0.05) 50%, transparent 100%);
+    border-radius: 50%;
+    mix-blend-mode: screen;
+    transition: width 0.8s ease, height 0.8s ease, background 0.8s ease;
+    animation: lantern-flicker-glow 2.5s infinite alternate ease-in-out;
+}
+
+/* Lantern Body (Frame) */
+.lantern-body {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    filter: drop-shadow(0 4px 6px rgba(0,0,0,0.6));
+}
+
+.lantern-hook {
+    width: 8px;
+    height: 6px;
+    border: 1.5px solid #6b6b6d;
+    border-bottom: none;
+    border-radius: 4px 4px 0 0;
+    margin-bottom: 2px;
+}
+
+.lantern-glass {
+    width: 16px;
+    height: 22px;
+    border: 1.5px solid #5a5a5c;
+    border-radius: 3px;
+    background: rgba(20, 20, 25, 0.5);
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    box-shadow: inset 0 0 4px rgba(255, 200, 100, 0.1);
+}
+
+.lantern-base {
+    width: 20px;
+    height: 4px;
+    background: #4a4a4c;
+    border-radius: 1px;
+    margin-top: 2px;
+    border-top: 1px solid #6b6b6d;
+}
+
+/* Internal Light Source */
+.lantern-light {
+    width: 8px;
+    height: 12px;
+    background: radial-gradient(ellipse, #fff5e6 10%, #e68a00 60%, transparent 100%);
+    border-radius: 50%;
+    filter: blur(1.5px);
+    animation: lantern-flicker-light 1.8s infinite alternate ease-in-out;
+    transition: background 0.8s ease, box-shadow 0.8s ease;
+}
+
+/* Flicker Animations */
+@keyframes lantern-flicker-glow {
+    0% { opacity: 0.8; transform: translate(-50%, -50%) scale(0.95); }
+    100% { opacity: 1; transform: translate(-50%, -50%) scale(1.05); }
+}
+
+@keyframes lantern-flicker-light {
+    0% { opacity: 0.85; transform: scale(0.9); }
+    100% { opacity: 1; transform: scale(1.1); }
+}
+
+/* Active (Hover) State */
+.lantern-cursor.active .lantern-glow {
+    width: 130px;
+    height: 130px;
+    background: radial-gradient(circle, rgba(230, 160, 80, 0.3) 0%, rgba(200, 130, 60, 0.1) 60%, transparent 100%);
+}
+
+.lantern-cursor.active .lantern-light {
+    background: radial-gradient(ellipse, #ffffff 10%, #ffaa00 70%, transparent 100%);
+    box-shadow: 0 0 10px 2px rgba(255, 170, 0, 0.4);
+}
+
+/* Click State */
+.lantern-cursor.clicked .lantern-wrapper {
+    transform: translate(-50%, -50%) rotate(12deg) scale(0.95);
+}
+.lantern-cursor.clicked .lantern-light {
+    background: radial-gradient(ellipse, #ffffff 20%, #ffcc66 80%, transparent 100%);
+    box-shadow: 0 0 15px 4px rgba(255, 170, 0, 0.6);
+}
+
+/* --- Cryptic Story Texts --- */
+.cryptic-text {
+    position: absolute;
+    font-size: 0.8rem;
+    color: rgba(226, 223, 210, 0.1); /* Very faint */
+    letter-spacing: 0.3em;
+    writing-mode: vertical-rl;
+    font-family: var(--font-jp);
+    user-select: none;
+    transition: color 1.5s ease, text-shadow 1.5s ease;
+    cursor: none !important;
+}
+
+.cryptic-text:hover {
+    color: rgba(226, 223, 210, 0.7);
+    text-shadow: 0 0 10px rgba(197, 169, 97, 0.5);
+}
+
+.hero-cryptic {
+    bottom: 12vh;
+    right: 8vw;
+    z-index: 5;
+}
+
+.side-cryptic {
+    top: 25%;
+    left: 6vw;
+    z-index: 5;
+}
+
+.side-cryptic-right {
+    top: 15%;
+    right: 4vw;
+    z-index: 5;
+}
+
+.center-cryptic {
+    position: relative;
+    writing-mode: horizontal-tb;
+    text-align: center;
+    margin: 3rem auto 0;
+    line-height: 2.5;
+}
+
+/* Secret Overlays */
+.secret-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(4, 5, 7, 0.95);
+    z-index: 9990;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.8s ease;
+}
+
+.secret-overlay.show {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.secret-trigger {
+    transition: color 0.3s, text-shadow 0.3s;
+    cursor: none !important;
+}
+
+.secret-trigger:hover {
+    color: var(--accent-gold);
+    text-shadow: 0 0 10px rgba(197, 169, 97, 0.5);
+}
+
+/* Letter Content */
+.secret-letter-content {
+    max-width: 600px;
+    padding: 3rem;
+    text-align: center;
+    transform: translateY(20px);
+    transition: transform 0.8s ease;
+    filter: blur(2px);
+}
+
+.secret-overlay.show .secret-letter-content {
+    transform: translateY(0);
+    filter: blur(0);
+}
+
+.letter-text {
+    font-size: 0.95rem;
+    line-height: 2.5;
+    color: rgba(226, 223, 210, 0.8);
+    letter-spacing: 0.1em;
+    font-style: italic;
+    white-space: pre-wrap;
+    text-shadow: 0 0 5px rgba(226, 223, 210, 0.2);
+}
+
+/* Night Menu Content */
+.night-menu-content {
+    text-align: center;
+    width: 100%;
+    max-width: 800px;
+}
+
+.night-menu-title {
+    font-family: var(--font-en);
+    font-size: 2.5rem;
+    color: var(--accent-purple);
+    letter-spacing: 0.3em;
+    margin-bottom: 4rem;
+    text-shadow: 0 0 15px rgba(74, 48, 109, 0.5);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 1s ease 0.3s, transform 1s ease 0.3s;
+}
+
+.secret-overlay.show .night-menu-title {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.night-menu-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+}
+
+.night-menu-item {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 1s ease, transform 1s ease, color 0.3s, text-shadow 0.3s;
+}
+
+.secret-overlay.show .night-menu-item:nth-child(1) { transition-delay: 0.6s; }
+.secret-overlay.show .night-menu-item:nth-child(2) { transition-delay: 0.9s; }
+.secret-overlay.show .night-menu-item:nth-child(3) { transition-delay: 1.2s; }
+
+.secret-overlay.show .night-menu-item {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.night-menu-item:hover {
+    transform: scale(1.02);
+}
+
+.night-menu-item h3 {
+    font-size: 1.5rem;
+    color: var(--text-main);
+    margin-bottom: 0.5rem;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    transition: color 0.5s, text-shadow 0.5s;
+}
+
+.night-menu-item:hover h3 {
+    color: var(--accent-gold);
+    text-shadow: 0 0 15px rgba(197, 169, 97, 0.6);
+}
+
+.night-menu-item p {
+    font-size: 0.85rem;
+    color: rgba(226, 223, 210, 0.5);
+    letter-spacing: 0.1em;
+}
+
+.night-menu-close {
+    margin-top: 5rem;
+    font-family: var(--font-en);
+    font-size: 0.9rem;
+    color: rgba(226, 223, 210, 0.4);
+    letter-spacing: 0.2em;
+    transition: color 0.3s;
+    opacity: 0;
+    transition: opacity 1s ease 2s;
+}
+
+.secret-overlay.show .night-menu-close {
+    opacity: 1;
+}
+
+.night-menu-close:hover {
+    color: var(--text-main);
+}
+
+@media (max-width: 768px) {
+    body, a, button, .menu-item, .secret-trigger, .night-menu-close, .keyhole-icon {
+        cursor: auto !important;
+    }
+    .lantern-cursor {
+        display: none;
     }
 }
