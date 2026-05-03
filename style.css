@@ -294,6 +294,25 @@ body {
     margin: 0 auto;
 }
 
+.concept-line1 {
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.concept-line2 {
+    opacity: 0;
+    transform: translateY(20px);
+    margin-top: 2.5rem;
+}
+
+#secret-concept-overlay.show .concept-line1 {
+    animation: fade-up 1.5s 0.2s forwards cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+#secret-concept-overlay.show .concept-line2 {
+    animation: fade-up 1.5s 2.5s forwards cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
 /* Menu */
 .bg-image-section {
     background-image: url('bg.png');
@@ -767,6 +786,26 @@ body, a, button, .menu-item, .secret-trigger, .night-menu-close, .keyhole-icon {
 
 .night-menu-item:hover {
     transform: scale(1.02);
+}
+
+/* Reaction Texts */
+.reaction-text {
+    position: fixed;
+    font-size: 0.75rem;
+    color: rgba(226, 223, 210, 0.7);
+    letter-spacing: 0.1em;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0;
+    transform: translate(-50%, -10px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    font-family: var(--font-jp);
+    text-shadow: 0 0 8px rgba(0, 0, 0, 0.9);
+}
+
+.reaction-text.show {
+    opacity: 1;
+    transform: translate(-50%, -20px);
 }
 
 .night-menu-item h3 {

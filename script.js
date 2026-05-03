@@ -56,7 +56,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         // Expand glow on clickable elements
-        const clickables = document.querySelectorAll("a, button, .menu-item, .secret-trigger, .night-menu-close, .keyhole-icon, .cryptic-text");
+        const clickables = document.querySelectorAll("a, button, .menu-item, .secret-trigger, .night-menu-close, .keyhole-icon, .cryptic-text, .reaction-spot");
         clickables.forEach(el => {
             el.addEventListener("mouseenter", () => {
                 cursorGlow.style.width = "400px";
@@ -174,6 +174,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const nightMenuOverlay = document.getElementById("night-menu-overlay");
     const nightMenuClose = document.querySelector(".night-menu-close");
 
+    const conceptTrigger = document.getElementById("secret-concept-trigger");
+    const conceptOverlay = document.getElementById("secret-concept-overlay");
+
     // Tea trigger variables
     const teaTrigger = document.getElementById("secret-tea-trigger");
     const lastDrinkDefault = document.getElementById("last-drink-default");
@@ -197,6 +200,20 @@ document.addEventListener("DOMContentLoaded", () => {
         letterOverlay.addEventListener("click", () => {
             letterOverlay.classList.remove("show");
             document.body.style.overflow = "";
+        });
+    }
+
+    if (conceptTrigger && conceptOverlay) {
+        conceptTrigger.addEventListener("click", () => {
+            conceptOverlay.classList.add("show");
+            document.body.style.overflow = "hidden";
+        });
+
+        conceptOverlay.addEventListener("click", (e) => {
+            if (e.target === conceptOverlay) {
+                conceptOverlay.classList.remove("show");
+                document.body.style.overflow = "";
+            }
         });
     }
 
@@ -253,6 +270,64 @@ document.addEventListener("DOMContentLoaded", () => {
                     lastDrinkSecret.style.display = "none";
                 }
             }
+            if (conceptOverlay && conceptOverlay.classList.contains("show")) {
+                conceptOverlay.classList.remove("show");
+                document.body.style.overflow = "";
+            }
         }
     });
+
+    // --- 6. Lantern Reaction Spots ---
+    const reactionSpots = document.querySelectorAll(".reaction-spot");
+    
+    if (reactionSpots.length > 0) {
+        const reactionTextEl = document.createElement("div");
+        reactionTextEl.id = "reaction-text-container";
+        reactionTextEl.className = "reaction-text";
+        document.body.appendChild(reactionTextEl);
+
+        const reactionMessages = [
+            "誰かが、ここに立っていた気がする。",
+            "さっきまで、何かがあった。",
+            "ここは、少し静かすぎる。",
+            "触れない方がいい。",
+            "見ないふりをしてください。",
+            "あまり長く見ない方がいい。",
+            "灯りが、少し揺れた。",
+            "ここは、よく見えない。",
+            "あなたの灯りが反応している。"
+        ];
+
+        let reactionTimeout;
+
+        reactionSpots.forEach(spot => {
+            spot.addEventListener("click", (e) => {
+                // Position text near click
+                reactionTextEl.style.left = e.clientX + "px";
+                reactionTextEl.style.top = (e.clientY - 20) + "px"; 
+
+                // Reset animation state
+                reactionTextEl.classList.remove("show");
+                
+                // Choose text
+                if (Math.random() < 0.05) {
+                    reactionTextEl.textContent = "見つけましたね。";
+                } else {
+                    reactionTextEl.textContent = reactionMessages[Math.floor(Math.random() * reactionMessages.length)];
+                }
+
+                // Show text with slight delay to ensure reset applies
+                setTimeout(() => {
+                    reactionTextEl.classList.add("show");
+                }, 10);
+
+                // Hide after 3.5s
+                clearTimeout(reactionTimeout);
+                reactionTimeout = setTimeout(() => {
+                    reactionTextEl.classList.remove("show");
+                }, 3500);
+            });
+        });
+    }
+
 });
