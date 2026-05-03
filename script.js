@@ -330,4 +330,83 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    // --- 7. Holiday Creepy Effects ---
+    const holidayText = document.getElementById("holiday-text");
+    if (holidayText) {
+        const today = new Date();
+        const day = today.getDay();
+        // 0 = Sunday, 6 = Saturday (or you can add logic for public holidays if needed)
+        const isHoliday = (day === 0 || day === 6);
+        
+        if (isHoliday) {
+            document.body.classList.add("is-holiday");
+            holidayText.classList.add("creepy-holiday-text");
+            
+            setInterval(() => {
+                if (Math.random() < 0.15) { // 15% chance every 2.5s
+                    const original = "Holiday";
+                    const creeps = ["Holi...day?", "逃げて", "終わらない日", "■■■■", "Never", "Eternity"];
+                    holidayText.textContent = creeps[Math.floor(Math.random() * creeps.length)];
+                    holidayText.style.color = "rgba(180, 20, 20, 0.9)";
+                    
+                    setTimeout(() => {
+                        holidayText.textContent = original;
+                        holidayText.style.color = "";
+                    }, 800 + Math.random() * 600);
+                }
+            }, 2500);
+        }
+    }
+
+    // --- 8. Hero Intro Creepy Glitch ---
+    const heroGlitch1 = document.getElementById("hero-glitch-1");
+    const heroGlitch2 = document.getElementById("hero-glitch-2");
+
+    if (heroGlitch1 && heroGlitch2) {
+        const originalText1 = heroGlitch1.innerHTML;
+        const creeps1 = [
+            "本日の生贄は、あなたです。",
+            "ここはもう、現実ではありません。",
+            "帰り道は、もうありません。",
+            "もう、引き返せません。"
+        ];
+
+        const originalText2 = heroGlitch2.innerHTML;
+        const creeps2 = [
+            "見てはいけない。<br>気づかないふりをしてください。",
+            "あなたの灯りも、<br>いずれ消えてしまう。",
+            "彼らがあなたを<br>見つけてしまう前に。"
+        ];
+
+        // Glitch Line 1
+        setInterval(() => {
+            if (Math.random() < 0.15) { // 15% chance every 3s
+                heroGlitch1.innerHTML = creeps1[Math.floor(Math.random() * creeps1.length)];
+                heroGlitch1.classList.add("creepy-holiday-text");
+                heroGlitch1.style.color = "rgba(180, 20, 20, 0.9)";
+                
+                setTimeout(() => {
+                    heroGlitch1.innerHTML = originalText1;
+                    heroGlitch1.classList.remove("creepy-holiday-text");
+                    heroGlitch1.style.color = "";
+                }, 1000 + Math.random() * 800);
+            }
+        }, 3000);
+
+        // Glitch Line 2
+        setInterval(() => {
+            if (Math.random() < 0.15) { // 15% chance every 3.5s
+                heroGlitch2.innerHTML = creeps2[Math.floor(Math.random() * creeps2.length)];
+                heroGlitch2.classList.add("creepy-holiday-text");
+                heroGlitch2.style.color = "rgba(180, 20, 20, 0.9)";
+                
+                setTimeout(() => {
+                    heroGlitch2.innerHTML = originalText2;
+                    heroGlitch2.classList.remove("creepy-holiday-text");
+                    heroGlitch2.style.color = "";
+                }, 1200 + Math.random() * 800);
+            }
+        }, 3500);
+    }
+
 });

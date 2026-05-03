@@ -808,6 +808,32 @@ body, a, button, .menu-item, .secret-trigger, .night-menu-close, .keyhole-icon {
     transform: translate(-50%, -20px);
 }
 
+/* --- Creepy Holiday Effect --- */
+.creepy-holiday-text {
+    font-family: 'Courier New', Courier, monospace;
+    transition: color 0.1s;
+    user-select: none;
+}
+
+body.is-holiday .lantern-glow {
+    background: radial-gradient(circle, rgba(180, 20, 20, 0.3) 0%, rgba(100, 10, 10, 0.05) 50%, transparent 100%);
+}
+
+body.is-holiday .lantern-light {
+    background: radial-gradient(ellipse, #ffcccc 10%, #cc0000 60%, transparent 100%);
+    box-shadow: 0 0 12px 3px rgba(200, 0, 0, 0.5);
+    animation: lantern-flicker-light-creepy 0.4s infinite alternate ease-in-out;
+}
+
+body.is-holiday .cursor-glow {
+    background: radial-gradient(circle, rgba(150, 0, 0, 0.1) 0%, rgba(50, 0, 0, 0.05) 40%, transparent 70%) !important;
+}
+
+@keyframes lantern-flicker-light-creepy {
+    0% { opacity: 0.5; transform: scale(0.7); }
+    100% { opacity: 1; transform: scale(1.3); }
+}
+
 .night-menu-item h3 {
     font-size: 1.5rem;
     color: var(--text-main);
